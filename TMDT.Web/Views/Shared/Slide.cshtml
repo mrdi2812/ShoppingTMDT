@@ -1,0 +1,38 @@
+﻿@model  IEnumerable<TMDT.Web.Models.Common.SlideViewModel>
+@{int total = Model.Count(); }
+<div class="index-banner">
+    <div class="wmuSlider example1" style="height: 560px;">
+        <div class="wmuSliderWrapper">
+            @foreach (var item in Model.Where(x => x.Status))
+            {
+                <article style="position: relative; width: 100%; opacity: 1;">
+                    <div class="banner-wrap">
+                        <div class="slider-left">
+                            <img src="@item.Image" alt="@item.Name" />
+                        </div>
+                        <div class="slider-right">
+                            <h1>@item.Name</h1>
+                            <h2>@item.Description</h2>
+                            <p>@Html.Raw(@item.Content)</p>
+                            <div class="btn"><a href="@item.Url">Shop Now</a></div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
+                </article>
+            }               
+        </div>
+        <a class="wmuSliderPrev">Previous</a><a class="wmuSliderNext">Next</a>
+        <ul class="wmuSliderPagination">
+            @for (int i = 0; i <= total; i++)
+            {
+                <li><a href="#" class="">@i</a></li>
+            }                      
+        </ul>
+        <a class="wmuSliderPrev">Previous</a><a class="wmuSliderNext">Next</a><ul class="wmuSliderPagination"><li><a href="#" class="wmuActive">0</a></li><li><a href="#" class="">1</a></li><li><a href="#" class="">2</a></li><li><a href="#" class="">3</a></li><li><a href="#" class="">4</a></li></ul>
+    </div>
+    <script src="~/Assets/js/jquery.wmuSlider.js"></script>
+    <script type="text/javascript" src="~/Assets/js/modernizr-2.6.2.min.js"></script>
+    <script>
+       $('.example1').wmuSlider();
+    </script>
+</div>

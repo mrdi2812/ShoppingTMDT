@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_LayoutCart.cshtml";
+}
+@section footerJS{
+    <script src="~/Assets/js/shoppingCart.js"></script>
+}
+<section id="cart_items">
+    <div class="container"> 
+        <div class="table-responsive" style="overflow-x:auto;">
+            @if (int.Parse(@Session["count"].ToString()) == 0)
+            {
+                <div class="col-md-4 col-sm-4">
+                </div>
+                <div class="col-md-4 col-sm-4">
+                    <p><img src="https://cdngarenanow-a.akamaihd.net/shopee/shopee-pcmall-live-vn/assets/f3540f6657bbdc1120e3f8cc90bdba97.png" /></p>
+                    <p class="text-center">Giỏ hàng trống</p>
+                    <br />
+                    <div class="pull-center"><a class="btn-default1" href="http://localhost:7000">Tiếp tục mua hàng</a></div>
+                </div>                
+                <div class="col-md-4 col-sm-4">
+                </div>
+                <div class="clearfix"></div>
+            }
+            else
+            {
+                <table class="table">
+                    <thead class="cart-header">
+                        <tr>
+                            <th class="th-edit">Sản phẩm</th>
+                            <th class="th-edit">Loại</th>
+                            <th class="th-edit">Giá tiền</th>
+                            <th class="th-edit">Số lượng</th>
+                            <th class="th-edit">Thành tiền</th>
+                            <th class="th-edit">Thao tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cartBody"></tbody>
+                </table>
+                <button class="btn-default1" id="btnContinue" href="">Tiếp tục mua hàng</button>
+                <button class="btn-default1" id="btnDeleteAll">Xóa giỏ hàng</button>
+                <button class="btn-default1" id="btnCheckout" data-toggle="modal" data-target="#frmForm">Thanh toán</button>
+                <div class="pull-right">
+                    Tổng tiền: <span id="lblTotalOrder"></span>
+                </div>
+                if (Request.IsAuthenticated)
+                {
+                    <div class="modal" tabindex="-1" role="dialog" id="frmForm">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Thông báo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form method="post" id="frmPayment">
+                                        <div class="form-group">
+                                            <label>
+                                                <input type="checkbox" id="chkUserLoginInfo" />
+                                                Sử dụng thông tin đăng nhập
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="txtName" placeholder="Họ tên">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="txtAddress" placeholder="Địa chỉ">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="txtEmail" placeholder="Email">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control" id="txtPhone" placeholder="Điện thoại">
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea value="" class="form-control" id="txtMessage">Message</textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <select class="form-control" id="txtPaymentMethod">
+                                                <option>Thanh toán tiền mặt</option>
+                                                <option>Quẹt thẻ</option>
+                                                <option>Chuyển khoản</option>
+                                            </select>
+                                        </div>
+                                        <div class="clearfix"> </div>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn-form" id="btnCreateOrder" data-dismiss="modal">Thanh toán</button>
+                                    <button type="button" class="btn-close" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="modal" tabindex="-1" role="dialog" id="frmForm">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Thông báo</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Vui lòng đăng nhập trước khi mau hàng</p>
+                                    <a href="/dang-nhap.html" class="btn-form">Đămg nhập</a>
+                                    <div class="clearfix"> </div>                               
+                                </div>
+                                <div class="modal-footer">
+                                    <a href="/dang-ky.html" class="btn-form" >Đămg ký</a>
+                                    <button type="button" class="btn-close" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            }
+        </div>                 
+     </div>          
+</section>
+<div class="clear"></div>
+<script id="tplCart" type="x-tmpl-mustache">
+    <tr>
+        <td>
+            <div class="form-group">
+                <div class="col-sm-3">
+                    <img src="{{Image}}" />
+                </div>
+                <div class="cart-text">
+                    <p>{{ProductName}}</p>
+                </div>
+            </div>
+        </td>
+        <td>{{Category}}</td>
+        <td>{{PriceF}}</td>
+        <td>
+            <div class="input-group col-sm-1">
+                <span class="input-group-btn">
+                    <button class="btn btn-custom qtyminus" field='txt{{ProductId}}'>
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <input class="form-control input-number txtQuantity" name="txt{{ProductId}}" id="{{ProductName}}" data-id="{{ProductId}}" data-price="{{Price}}" value="{{Quantity}}" data-category="{{Category}}" data-color="Color" min="1" max="100" type="text">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-custom qtyplus" field='txt{{ProductId}}'>
+                        <span class="glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>      
+        </td>
+        <td id="amount_{{ProductId}}">{{Amount}}</td>
+        <td>
+        <div class="col-sm-2">
+            <span class="input-group-btn">
+            <button class="btn btn-custom btnDeleteItem" data-id="{{ProductId}}">
+            <span class="glyphicon glyphicon-trash"></span>
+            </button>
+            </span>
+        </div>       
+        </td>
+    </tr>
+
+</script>

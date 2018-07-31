@@ -1,0 +1,11 @@
+{
+	"name": "ASP.NET",
+  "private": true,
+  "dependencies": {
+    "mustache": "~2.2.1",
+    "numeral": "~1.5.3",
+    "jquery-comments": "~1.2.0",
+    "jquery-textcomplete": "~1.8.2",
+    "font-awesome": "~4.7.0"
+  }
+}

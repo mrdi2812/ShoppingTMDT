@@ -1,0 +1,39 @@
+﻿@model TMDT.Web.Models.Common.ShopViewModel
+<div class="rsidebar span_1_of_left">
+    <section class="sky-form">
+                <h4>CATALOG</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        <ul class="kids">
+                            @foreach (var item in Model.ProductCategory)
+                            {
+                                var url = "/" + item.Alias + ".pc-" + item.ID+".html";
+                                <li><a href="@url"><i></i>@item.Name</a></li>
+                            }
+                        </ul>                    
+                    </div>                    
+                </div>
+            </section>
+    @*<section class="sky-form">
+                <h4>MÀU SẮC</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        @foreach (var color in Model.Colors)
+                        {
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>@color.Name</label>
+                        }                                        
+                    </div>
+                </div>
+            </section>
+    <section class="sky-form">
+                <h4>SIZE</h4>
+                <div class="row row1 scroll-pane">
+                    <div class="col col-4">
+                        @foreach (var size in Model.Sizes)
+                        {
+                            <label class="checkbox"><input type="checkbox" name="checkbox"><i></i>@size.Name</label>
+                        }   
+                    </div>
+                </div>
+            </section>*@   
+</div>

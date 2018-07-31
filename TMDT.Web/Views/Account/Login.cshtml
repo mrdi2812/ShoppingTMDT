@@ -1,0 +1,44 @@
+﻿@model TMDT.Web.Models.LoginViewModel
+@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_LayoutCart.cshtml";
+}
+
+<div class="col_1_of_login span_1_of_login">
+    <div class="button1">
+        <p>Nếu bạn chưa có tài khoản vui lòng đăng ký tại link dưới đây</p>
+        <a class="add-cart" href="dang-ky.html">Đăng ký thành viên</a>
+    </div>
+    <div class="clear"></div>
+</div>
+<div class="col_1_of_login span_1_of_login">
+    <div class="login-title">
+        <h4 class="title">ĐĂNG NHẬP TÀI KHOẢN</h4>
+    </div>
+    <div class="comments-area">
+        @using (Html.BeginForm("Login", "Account", new { returnUrl = @ViewBag.ReturnUrl }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken();
+            @Html.ValidationSummary(false, "", new { @class = "error" });
+
+            <div>
+                <span>Tài khoản <label>*</label></span>
+                @Html.TextBoxFor(model => model.UserName)
+            </div>
+            <div>
+                <span>Mật khẩu<label>*</label></span>
+                @Html.PasswordFor(model => model.Password)
+            </div>
+            <div>
+                @Html.CheckBoxFor(model => model.RememberMe) Nhớ mật khẩu ?
+            </div>
+            <div class="pull-right">
+                <button class="btn-default1" type="submit">ĐĂNG NHẬP</button>
+                <a class="forgot" href="/dat-lai-mat-khau.html">Quên mật khẩu?</a>
+            </div>
+            
+        }
+    </div>
+    <div class="clearfix"> </div>
+</div>
+<div class="clearfix"> </div>        

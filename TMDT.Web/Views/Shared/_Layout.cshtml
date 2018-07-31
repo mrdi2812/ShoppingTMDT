@@ -1,0 +1,124 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <link href="~/Assets/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" media="all"/>
+    <link href="~/Assets/css/custom.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Assets/css/style.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="~/Assets/css/form.css" rel="stylesheet" type="text/css" media="all" />
+    <link rel="stylesheet" type="text/css" href="~/Assets/libs/jquery-comments/css/jquery-comments.css"> 
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800' rel='stylesheet' type='text/css'>
+    <script type="text/javascript" src="~/Assets/js/jquery.min.js"></script>
+    <script src="~/Assets/libs/mustache/mustache.js"></script>
+    <script src="~/Assets/libs/numeral/numeral.js"></script>
+    <script src="~/Assets/js/common.js"></script>
+    <script type="text/javascript" src="~/Assets/libs/jquery-comments/js/jquery-comments.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $(".dropdown img.flag").addClass("flagvisibility");
+
+            $(".dropdown dt a").click(function() {
+                $(".dropdown dd ul").toggle();
+            });
+
+            $(".dropdown dd ul li a").click(function() {
+                var text = $(this).html();
+                $(".dropdown dt a span").html(text);
+                $(".dropdown dd ul").hide();
+                $("#result").html("Selected value is: " + getSelectedValue("sample"));
+            });
+
+            function getSelectedValue(id) {
+                return $("#" + id).find("dt a span.value").html();
+            }
+
+            $(document).bind('click', function(e) {
+                var $clicked = $(e.target);
+                if (! $clicked.parents().hasClass("dropdown"))
+                    $(".dropdown dd ul").hide();
+            });
+
+
+            $("#flagSwitcher").click(function() {
+                $(".dropdown img.flag").toggleClass("flagvisibility");
+            });
+        });
+    </script>
+    <!-- start menu -->
+    <link href="~/Assets/css/megamenu.css" rel="stylesheet" type="text/css" media="all" />
+    <script type="text/javascript" src="~/Assets/js/megamenu.js"></script>
+    <script>$(document).ready(function(){$(".megamenu").megamenu();});</script>
+    <!-- end menu -->
+    <!-- top scrolling -->
+    <script type="text/javascript" src="~/Assets/js/move-top.js"></script>
+    <script type="text/javascript" src="~/Assets/js/easing.js"></script>
+    <script type="text/javascript">
+		jQuery(document).ready(function($) {
+			$(".scroll").click(function(event){
+				event.preventDefault();
+				$('html,body').animate({scrollTop:$(this.hash).offset().top},1200);
+			});
+		});
+    </script>
+</head>
+<body>
+  @{ Html.RenderAction("Header", "Home");}    
+  @{ Html.RenderAction("Slide","Home");}
+    <div class="login">        
+        <div class="wrap">
+            <div class="content-top">
+                <div class="lsidebar span_1_of_c1">
+                    <p>Lorem ipsum dolor sit amet, consectetuer adipiscing</p>
+                </div>
+                <div class="cont span_2_of_c1">
+                    <div class="social">
+                        <ul>
+                            <li class="facebook"><a href="#"><span> </span></a><div class="radius"> <img src="~/Assets/images/radius.png"><a href="#"> </a></div><div class="border hide"></div></li>
+                        </ul>
+                    </div>
+                    <div class="social">
+                        <ul>
+                            <li class="twitter"><a href="#"><span> </span></a><div class="radius"> <img src="~/Assets/images/radius.png"></div><div class="border hide"></div></li>
+                        </ul>
+                    </div>
+                    <div class="social">
+                        <ul>
+                            <li class="google"><a href="#"><span> </span></a><div class="radius"> <img src="~/Assets/images/radius.png"></div><div class="border hide"></div></li>
+                        </ul>
+                    </div>
+                    <div class="social">
+                        <ul>
+                            <li class="dot"><a href="#"><span> </span></a><div class="radius"> <img src="~/Assets/images/radius.png"></div><div class="border hide"></div></li>
+                        </ul>
+                    </div>
+                    <div class="clear"> </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            @{ Html.RenderAction("_MenuLeft", "Product");}                   
+            @RenderBody()                  
+        </div>
+    </div>
+    <div class="clear"></div>
+  @{ Html.RenderAction("Footer", "Home");}
+    <script type="text/javascript">
+			$(document).ready(function() {
+
+				var defaults = {
+		  			containerID: 'toTop', // fading element id
+					containerHoverID: 'toTopHover', // fading element hover id
+					scrollSpeed: 1200,
+					easingType: 'linear'
+		 		};
+
+
+				$().UItoTop({ easingType: 'easeOutQuart' });
+
+			});
+    </script>
+    <a href="#" id="toTop" style="display: block;"><span id="toTopHover" style="opacity: 1;"></span></a>
+    @RenderSection("footerJS", required: false);
+</body>
+</html>

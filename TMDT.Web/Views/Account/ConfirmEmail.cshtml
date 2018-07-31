@@ -1,0 +1,15 @@
+﻿@using Microsoft.AspNet.Identity
+@{
+    Layout = "~/Views/Shared/_LayoutCart.cshtml";
+}
+
+<div class="cont span_2_of_3">
+    <div class="comments-area">
+        <div class="alert alert-success" role="alert">
+            <strong>Chúc mừng bạn !</strong> đã đăng ký thành công tài khoản @ViewBag.Email tại ONLINE SHOP.
+            <br />
+            Vui lòng click <a href=@Url.Action("Index","Home")> vào đây </a>để quay về trang chủ.
+        </div>
+    </div>
+</div>
+<div class="clear"></div>

@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TMDT.Web.Models.ProductViewModel>
+
+<div class="cont span_2_of_3">
+    <div class="mens-toolbar">
+        <div class="sort">
+            <h4>SẢN PHẨM HOT</h4>
+        </div>
+        <div class="pager">
+        </div>
+        <div class="clear"></div>
+    </div>
+@foreach (var item in Model)
+{
+    var url = "/" + item.Alias + ".p-" + item.ID + ".html";
+    <div class="col_1_of_single1 span_1_of_single1">
+        <a href="@url">
+            <div class="view1 view-fifth1">
+                <div class="top_box">
+                    <div class="grid_img">
+                        <div class="css3"><img src="@item.ThumbnailImage" alt="@item.Name" /></div>
+                        <div class="mask1">
+                            <div class="info">Xem chi tiết</div>
+                        </div>
+                    </div>
+                    <h3 class="m_1">@item.Name</h3>
+                    <p class="m_2">@item.Description</p>
+                    @if (item.PromotionPrice!=null)
+                    {
+                        <div class="row">
+                            <span class="price">@(item.OriginalPrice == 0 ? "Liên hệ" : item.OriginalPrice.ToString("#,##0")) &#x20AB;</span>
+                            &nbsp;&nbsp;&nbsp;<span class="price-sale">@(item.PromotionPrice.Value.ToString("#,##0")) &#x20AB;</span>
+                        </div>
+                        
+                    }
+                    else
+                    {
+                        <span class="price-sale">@(item.OriginalPrice == 0 ? "Liên hệ" : item.OriginalPrice.ToString("#,##0")) &#x20AB;</span>
+                    }
+
+                </div>
+            </div>
+            <span class="rating1">
+                <input type="radio" class="rating-input" id="rating-input-1-5" name="rating-input-1">
+                <label for="rating-input-1-5" class="rating-star1"></label>
+                <input type="radio" class="rating-input" id="rating-input-1-4" name="rating-input-1">
+                <label for="rating-input-1-4" class="rating-star1"></label>
+                <input type="radio" class="rating-input" id="rating-input-1-3" name="rating-input-1">
+                <label for="rating-input-1-3" class="rating-star1"></label>
+                <input type="radio" class="rating-input" id="rating-input-1-2" name="rating-input-1">
+                <label for="rating-input-1-2" class="rating-star"></label>
+                <input type="radio" class="rating-input" id="rating-input-1-1" name="rating-input-1">
+                <label for="rating-input-1-1" class="rating-star"></label>&nbsp;
+                (@item.ViewCount)
+            </span>
+            <span class="rating-item">
+                
+            </span>
+            <div class="clear"></div>
+        </a>
+    </div>
+}
+ </div>

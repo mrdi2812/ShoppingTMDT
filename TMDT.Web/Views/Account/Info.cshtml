@@ -1,0 +1,59 @@
+﻿@model TMDT.Web.Models.ApplicationUserViewModel
+@{
+    ViewBag.Title = "Info";
+    Layout = "~/Views/Shared/_main.cshtml";
+}
+<div class="cont span_2_of_3">
+    <div class="panel-title">
+        THÔNG TIN CÁ NHÂN             
+    </div>
+    <br />
+    <div class="responsive">
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <td>Họ tên</td>
+                    <td>@Model.FullName</td>
+                </tr>
+                <tr>
+                    <td>Email</td>
+                    <td>@Model.Email</td>
+                </tr>
+                <tr>
+                    <td>Tên tài khoản</td>
+                    <td>@Model.UserName</td>
+                </tr>
+                <tr>
+                    <td>Số điện thoại</td>
+                    <td>@Model.PhoneNumber</td>
+                </tr>
+                <tr>
+                    <td>Ngày sinh</td>
+                    <td>@Convert.ToDateTime(@Model.BirthDay).ToShortDateString()</td>
+                </tr>
+                <tr>
+                    <td>Địa chỉ</td>
+                    <td>@Model.Address</td>
+                </tr>
+                <tr>
+                    <td>Giới tính</td>
+                    @if (Model.Gender == "true")
+                    {<td>Nam</td>}
+                    else
+                    {
+                        <td>Nữ</td>
+                    }
+                </tr>
+                <tr>
+                    <td>Đổi mật khẩu</td>
+                    <td><a href="/doi-mat-khau.html" class="btn-form">Đổi mật khẩu</a></td>
+                </tr>
+                <tr>
+                    <td><a href="/cap-nhat-thong-tin.html" class="btn-form">Cập nhật thông tin</a></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="clear"></div>

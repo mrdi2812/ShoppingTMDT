@@ -1,0 +1,215 @@
+﻿@model TMDT.Web.Models.ProductViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_main.cshtml";
+    var moreImages = (IEnumerable<TMDT.Web.Models.ProductImageViewModel>)ViewBag.MoreImages;
+    var listsize = (List<TMDT.Common.ViewModels.ListViewModel>)ViewBag.Size;
+    var relatedProduct = (IEnumerable<TMDT.Web.Models.ProductViewModel>)ViewBag.RelatedProducts;
+    var tags = (IEnumerable<TMDT.Web.Models.Common.TagViewModel>)ViewBag.Tags;
+    var productId = Model.ID;
+    var userId = ViewBag.UserId;
+    var userName = ViewBag.UserNameId;
+    var totalCount = ViewBag.TotalCount;
+}
+@section footerJS{
+<script src="~/Assets/libs/moment/moment-with-locales.js"></script>
+<script src="~/Assets/js/shoppingCart.js"></script>
+<script src="~/Assets/js/comments.js"></script>
+}
+<input type="hidden" id="hidProductId" value="@Model.ID">
+<input type="hidden" id="hidCurrentUserId" value="@userId">
+<input type="hidden" id="hidCurrentUserName" value="@userName">
+<div class="cont span_2_of_3">
+    <div class="labout span_1_of_a1">
+        <!-- start product_slider -->      
+    @if (moreImages.Count() > 0)
+       {  <ul id="etalage">
+            @foreach (var item in moreImages)
+                {
+                 <li>
+                    <a href="optionallink.html">
+                    <img class="etalage_thumb_image" src="@item.Path" />
+                    <img class="etalage_source_image" src="@item.Path" />
+                    </a>
+                </li>
+            }
+           </ul>
+    }
+    else
+    {
+        <ul id="etalage">
+            <li>
+                <a href="optionallink.html">
+                    <img class="etalage_thumb_image" src="@Model.ThumbnailImage" />
+                    <img class="etalage_source_image" src="@Model.ThumbnailImage" />
+                </a>
+            </li>
+        </ul>
+   }
+            <!-- end product_slider -->
+</div>
+    <div class="cont1 span_2_of_a1">      
+        <h3 class="m_3">@Model.Name</h3>
+
+        <div class="price_single">
+            
+            @if (Model.PromotionPrice != null)
+            {
+                <span class="reducedfrom">@(Model.OriginalPrice == 0 ? "Liên hệ" : Model.OriginalPrice.ToString("#,##0")) &#x20AB;</span>
+                <span class="actual">@(Model.PromotionPrice == 0 ? "Liên hệ" : Model.PromotionPrice.Value.ToString("#,##0")) &#x20AB;</span>
+            }
+            else
+            {
+                <span class="actual">@(Model.OriginalPrice == 0 ? "Liên hệ" : Model.OriginalPrice.ToString("#,##0")) &#x20AB;</span>
+            }
+        </div>
+            <h4 class="m_9">Chọn size màu </h4>
+            @if (listsize.Count > 0)
+            {
+                <ul class="listquantity">
+                    @foreach (var size in listsize)
+                    {
+                    <li>
+                        <input type="radio" name="@size.Name" id="isCheck" value="@size.Quantity">
+                        <label>@size.Name</label>
+                        <input type="hidden" value="@size.Name" id ="log2" />
+                        <input type="hidden" value="@size.ColorId" id="colorId" />
+                        <input type="hidden" value="@size.SizeId" id="sizeId" />
+                    </li>                    
+                    }
+                </ul>
+                <div class="clear"></div>
+                <div class="quantity">
+                    <div class="form-group row">
+                        <div class="col-sm-2">
+                            <input type="number" value="1" class="col-sm-2" id="txtsoluong" />
+                        </div>
+                        @*<p class="col-sm-4 text" id="log1"></p>*@
+                    </div>
+                </div>
+                <div class="clear"></div>
+                <div class="btn_form">
+                    <a class="add-cart" id="btnAddToCart" href="#" data-id="@Model.ID">MUA NGAY</a>
+                </div>
+                @*<script>
+                    $( "input" ).on( "click", function() {
+                        $("#log1").html($("input:checked").val() + " sản phẩm có sẵn");
+                    });
+                </script>*@
+            }
+            else
+            {
+                <p class="m_text">Tạm hết hàng</p>
+            }                 
+        <ul class="add-to-links">
+            <li><img src="~/Assets/images/wish.png" alt="" /><a href="#">Add to wishlist</a></li>
+        </ul>
+        <p class="m_desc">@Model.Description</p>
+
+        <div class="social_single">
+            <ul>
+                <li class="fb"><a href="#"><span> </span></a></li>
+                <li class="tw"><a href="#"><span> </span></a></li>
+                <li class="g_plus"><a href="#"><span> </span></a></li>
+                <li class="rss"><a href="#"><span> </span></a></li>
+            </ul>
+        </div>
+        <div class="social_single">
+            <h4>Tags tìm kiếm: </h4>
+            <ul class="share_nav">
+                @foreach (var item in tags)
+                {
+                    <li><a href="/tag/@(item.ID).html"><span>@item.Name</span></a></li>
+                }                
+            </ul>
+        </div>
+    </div>
+    <div class="clear"></div>
+    <h3 class="m_3">Sản phẩm cùng loại</h3>
+    @if (relatedProduct.Count() > 0)
+    {
+        <ul id="flexiselDemo3">
+            @foreach (var product in relatedProduct)
+            {
+                <li><a href="/@(product.Alias).p-@(product.ID).html"><img src="@product.ThumbnailImage" /><div class="grid-flex">@product.OriginalPrice.ToString("N2") đ<p>@product.Name</p></div></a></li>
+            }
+        </ul>
+    }
+    else
+    {
+        <span class="text">Không có sản phẩm nào cùng loại</span>
+    }
+    <script type="text/javascript">
+		 $(window).load(function() {
+			$("#flexiselDemo1").flexisel();
+			$("#flexiselDemo2").flexisel({
+                    enableResponsiveBreakpoints: true,
+		    	responsiveBreakpoints: {
+                        portrait: {
+                            changePoint:480,
+		    			visibleItems: 1
+
+                    },
+		    		landscape: {
+                            changePoint:640,
+		    			visibleItems: 2
+
+                    },
+		    		tablet: {
+                            changePoint:768,
+		    			visibleItems: 3
+
+                    }
+                    }
+                });
+
+			$("#flexiselDemo3").flexisel({
+                    visibleItems: 5,
+				animationSpeed: 1000,
+				autoPlay: true,
+				autoPlaySpeed: 3000,
+				pauseOnHover: true,
+				enableResponsiveBreakpoints: true,
+		    	responsiveBreakpoints: {
+                        portrait: {
+                            changePoint:480,
+		    			visibleItems: 1
+
+                    },
+		    		landscape: {
+                            changePoint:640,
+		    			visibleItems: 2
+
+                    },
+		    		tablet: {
+                            changePoint:768,
+		    			visibleItems: 3
+
+                    }
+                    }
+			});
+                $( "input" ).on( "click", function() {
+                $("#log").html($("input:checked").val());
+                });
+            });
+    </script>
+    <script type="text/javascript" src="~/Assets/js/jquery.flexisel.js"></script>
+    <div class="toogle">
+        <h3 class="m_3">Chi tiết sản phẩm</h3>
+        <p class="m_text">@Html.Raw(Model.Content)</p>
+    </div>
+    <div class="toogle">
+        <h3 class="m_3">đánh giá & phản hồi</h3>
+        @if (Request.IsAuthenticated)
+        {
+            <div id="comments-container">
+            </div>
+        }
+        else
+        {
+            <label>Vui lòng<a href="/dang-nhap.html" class="btn-custom"> đăng nhập </a>trước khi bình luận </label>
+        }
+    </div>
+   
+</div>
+<div class="clear"></div>
